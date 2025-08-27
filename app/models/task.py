@@ -4,6 +4,14 @@ from ..extensions import db
 
 
 class Task(BaseModel):
+    def __init__(self, name, list_id, status, priority, description=None, delivery_time=None):
+        self.name = name
+        self.list_id = list_id
+        self.status = status
+        self.priority = priority
+        self.description = description
+        if delivery_time:
+            self.delivery_time = delivery_time
     __tablename__ = 'tasks'
     
     id = db.Column(db.Integer, primary_key=True)
