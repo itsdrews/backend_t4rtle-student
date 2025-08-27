@@ -28,7 +28,7 @@ def register():
 def login():
     try:
         data = request.get_json()   
-        result = AuthService.login(data["email"], data["password"])
+        result = AuthService.login(data["username"], data["password"])
         if not result:
             return jsonify({"error": "Credenciais inválidas"}), 401
         return jsonify(result)

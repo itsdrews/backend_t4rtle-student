@@ -4,7 +4,7 @@ from ..models.user import User
 from typing import Optional
 
 
-class   AuthService:
+class AuthService:
 
     @staticmethod
     def register(username: str, email: str, password: str) -> dict:
@@ -34,8 +34,8 @@ class   AuthService:
         }
 
     @staticmethod
-    def login(email: str, password: str) -> Optional[dict]:
-        user = User.query.filter_by(email=email).first()
+    def login(username: str, password: str) -> Optional[dict]:
+        user = User.query.filter_by(username=username).first()
         if user and user.check_password(password):
             access_token = create_access_token(identity=str(user.id))
             return {
