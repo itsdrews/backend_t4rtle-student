@@ -51,7 +51,8 @@ def get_tasks_by_list(list_id):
         "name": t.name,
         "status": t.status,
         "priority": t.priority,
-        "list_id": t.list_id
+        "list_id": t.list_id,
+        "created_at":t.created_at
     } for t in tasks])
 
 @task_bp.route('/<int:task_id>', methods=['PATCH'])
