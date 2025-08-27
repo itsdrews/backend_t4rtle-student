@@ -45,3 +45,9 @@ def profile():
         return jsonify(result)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+@auth_bp.route("/validate", methods=["GET"])
+@jwt_required()
+def validate_token_user():
+    jwt = get_jwt_identity()
+    return jsonify(jwt is not None)
