@@ -1,0 +1,66 @@
+# Como rodar o backend localmente
+
+Este projeto Flask pode exigir algumas adaptações no ambiente de cada desenvolvedor. Siga os passos abaixo para rodar o backend na sua máquina:
+
+## 1. Pré-requisitos
+- Python 3.12 ou superior
+- PostgreSQL (ou outro banco, se adaptar as configs)
+- Git
+
+## 2. Clonar o repositório
+```bash
+git clone <url-do-repo>
+cd <nome-da-pasta>
+```
+
+## 3. Criar e configurar o ambiente virtual
+```bash
+python -m venv venv
+# Ative o venv:
+# Windows:
+venv\Scripts\activate
+# Linux/Mac:
+source venv/bin/activate
+```
+
+## 4. Instalar as dependências
+```bash
+pip install -r requirements.txt
+```
+
+## 5. Configurar variáveis de ambiente
+Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis (ajuste para o seu ambiente):
+```
+DATABASE_URL=postgresql://usuario:senha@localhost:5432/nome_da_database
+SECRET_KEY=sua_secret_key
+JWT_SECRET_KEY=sua_jwt_secret
+```
+- Substitua `usuario`, `senha` e `nome_da_database` pelos dados do seu PostgreSQL.
+- Se usar outro banco, adapte a string de conexão.
+
+## 6. Criar o banco de dados
+- Crie o banco no seu SGBD (ex: via pgAdmin ou psql):
+```sql
+CREATE DATABASE nome_da_database;
+```
+
+## 7. Rodar as migrações
+```bash
+flask db upgrade
+```
+
+## 8. Rodar o backend
+```bash
+python app.py
+```
+
+## 9. Testar a API
+- Use ferramentas como Insomnia, Postman ou o frontend React.
+- Lembre-se de passar o token JWT nas rotas protegidas.
+
+## Observações
+- Cada dev deve adaptar o `.env` para seu ambiente local.
+- Se usar outro banco (MySQL, SQLite), ajuste a string `DATABASE_URL`.
+- Se precisar importar dados, use os arquivos CSV/JSON ou scripts fornecidos.
+
+Dúvidas? Consulte o README ou peça ajuda no grupo do projeto.

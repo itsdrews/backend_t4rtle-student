@@ -1,8 +1,16 @@
+from flask_jwt_extended import verify_jwt_in_request
+
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.services.auth_service import AuthService
 
 auth_bp = Blueprint("auth", __name__, url_prefix="/auth")
+# Endpoint para validação de token JWT (usado pelo frontend para checar autenticação)
+@auth_bp.route("/validate", methods=["GET", "OPTIONS"])
+@jwt_required()
+def validate():
+    # Se o token for válido, apenas retorna 200
+    return jsonify({"message": "Token válido"}), 200
 
 
 @auth_bp.route("/register", methods=["POST"])

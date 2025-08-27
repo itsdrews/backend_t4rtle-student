@@ -10,14 +10,13 @@ task_bp = Blueprint('tasks', __name__, url_prefix=__name__)
 @jwt_required()
 def create_task():
     data = request.json
-    required_fields = ['name', 'list_id', 'status', 'priority']
+    required_fields = ['name', 'list_id', 'priority']
     if not all(field in data for field in required_fields):
         return jsonify({"error": "Missing required fields"}), 400
 
     task = TaskService.create_task(
         name=data['name'],
         list_id=data['list_id'],
-        status=data['status'],
         priority=data['priority'],
         description=data.get('description', "")
     )
@@ -26,7 +25,10 @@ def create_task():
         "name": task.name,
         "status": task.status,
         "priority": task.priority,
-        "list_id": task.list_id
+        "list_id": task.list_id,
+        "created_at": task.created_at.isoformat() if task.created_at else None,
+        "updated_at": task.updated_at.isoformat() if task.updated_at else None,
+        "delivery_time": task.delivery_time.isoformat() if task.delivery_time else None
     }), 201
 
 @task_bp.route('/<int:task_id>', methods=['GET'])
@@ -40,19 +42,28 @@ def get_task(task_id):
         "name": task.name,
         "status": task.status,
         "priority": task.priority,
-        "list_id": task.list_id
+        "list_id": task.list_id,
+        "created_at": task.created_at.isoformat() if task.created_at else None,
+        "updated_at": task.updated_at.isoformat() if task.updated_at else None,
+        "delivery_time": task.delivery_time.isoformat() if task.delivery_time else None
     })
 
 @task_bp.route('/list/<int:list_id>', methods=['GET'])
 def get_tasks_by_list(list_id):
     tasks = TaskService.get_tasks_by_list(list_id)
-    return jsonify([{
-        "id": t.id,
-        "name": t.name,
-        "status": t.status,
-        "priority": t.priority,
-        "list_id": t.list_id
-    } for t in tasks])
+    return jsonify([
+        {
+            "id": t.id,
+            "name": t.name,
+            "status": t.status,
+            "priority": t.priority,
+            "list_id": t.list_id,
+            "created_at": t.created_at.isoformat() if t.created_at else None,
+            "updated_at": t.updated_at.isoformat() if t.updated_at else None,
+            "delivery_time": t.delivery_time.isoformat() if t.delivery_time else None
+        }
+        for t in tasks
+    ])
 
 @task_bp.route('/<int:task_id>', methods=['PATCH'])
 @jwt_required()

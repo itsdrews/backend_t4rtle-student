@@ -5,12 +5,12 @@ from typing import Optional, List
 class TaskService:
 
     @staticmethod
-    def create_task(name: str, list_id: int, status: str, priority: int, description: str = "") -> Task:
-        """Cria uma nova task"""
+    def create_task(name: str, list_id: int, priority: int, description: str = "") -> Task:
+        """Cria uma nova task com status pendente"""
         task = Task(
             name=name,
             list_id=list_id,
-            status=status,
+            status="pendente",
             priority=priority,
             description=description
         )

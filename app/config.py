@@ -45,7 +45,7 @@ class ProductionConfig(Config):
 
 class TestingConfig(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
+    SQLALCHEMY_DATABASE_URI = get_database_uri() or 'sqlite:///:memory:'
     JWT_SECRET_KEY = 'test-jwt-secret'
 
 config = {
